@@ -33,7 +33,7 @@ substitutions:
     #Repository Specific configuration. DevOps can change this settings
     _DEPLOYMENTNAME: hello-world-service
     _CONTAINERNAME: hello-world-service    
-    _REPO_NAME: docker-repo
+    _REPO_NAME: docker-image
     
     # Developers ONLY change
     _VERSION: v1.0
