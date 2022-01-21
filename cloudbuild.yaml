@@ -4,7 +4,7 @@ steps:
   args: ['clone', 'https://github.com/GoogleCloudPlatform/cloud-builders']
 # This step uses Application Default Credentials to clone a Cloud Source
 # Repository.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'git'
   args: ['clone', 'https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
   
