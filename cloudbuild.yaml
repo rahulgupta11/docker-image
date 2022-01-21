@@ -1,7 +1,7 @@
 steps:
 # credentials are required.
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/GoogleCloudPlatform/cloud-builders']
+#- name: 'gcr.io/cloud-builders/git'
+ # args: ['clone', 'https://github.com/GoogleCloudPlatform/cloud-builders']
 # This step uses Application Default Credentials to clone a Cloud Source
   
 #First Clone from Google Cloud Source Repository  
