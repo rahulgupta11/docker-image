@@ -39,7 +39,7 @@ substitutions:
     
     #Repository Specific configuration. DevOps can change this settings
     _DEPLOYMENTNAME: adminapi
-    _CONTAINERNAME: adminapi    
+    _CONTAINERNAME: adminapi   
     #_REPO_NAME: docker-repo
     
     # Developers ONLY change
