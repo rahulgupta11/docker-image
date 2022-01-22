@@ -27,15 +27,15 @@ steps:
   - 'adminapi=gcr.io/$PROJECT_ID/adminapi:$REVISION_ID'
  
   env:
-  - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=demo-mdev-mqa'
   
-substitutions:
+#substitutions:
     #GCP Specific configuration. Please DON'T change anything
     #_PROJECT: My-kubernates-Project
     #_PROJECT: my-kubernates-project-338709
-    _ZONE: us-central1-a
-    _GKE_CLUSTER: demo-mdev-mqa
+    #_ZONE: us-central1-a
+    #_GKE_CLUSTER: demo-mdev-mqa
     
     #Repository Specific configuration. DevOps can change this settings
     #_DEPLOYMENTNAME: adminapi
