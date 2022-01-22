@@ -5,8 +5,8 @@ steps:
 # This step uses Application Default Credentials to clone a Cloud Source
   
 #First Clone from Google Cloud Source Repository  
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone','https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
+#- name: 'gcr.io/cloud-builders/git'
+  #args: ['clone','https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
 
 #Build the image 
 - name: 'gcr.io/cloud-builders/docker'
@@ -20,29 +20,32 @@ steps:
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
   - 'set'
+  - '--namespace'
+  - 'mdev'
   - 'image'
   - 'deployment/${_DEPLOYMENTNAME}'
   - '${_CONTAINERNAME}=us-central1-docker.pkg.dev/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}'
-  - '--namespace'
-  - 'mdev'
+ 
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
   
 substitutions:
     #GCP Specific configuration. Please DON'T change anything
-    #_PROJECT: My-kubernates-Project
-    _PROJECT: my-kubernates-project-338709
+    _PROJECT: My-kubernates-Project
+    #_PROJECT: my-kubernates-project-338709
     _ZONE: us-central1-a
     _GKE_CLUSTER: demo-mdev-mqa
     
     #Repository Specific configuration. DevOps can change this settings
     _DEPLOYMENTNAME: hello-world-service
     _CONTAINERNAME: hello-world-service    
-    _REPO_NAME: docker-repo
+    #_REPO_NAME: docker-repo
     
     # Developers ONLY change
     _VERSION: v1.0
     
 options:
     substitution_option: 'ALLOW_LOOSE'
+    
+timeout: 10000s
