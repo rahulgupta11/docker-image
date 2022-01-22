@@ -1,42 +1,47 @@
 steps:
+# credentials are required.
+#- name: 'gcr.io/cloud-builders/git'
+ # args: ['clone', 'https://github.com/GoogleCloudPlatform/cloud-builders']
+# This step uses Application Default Credentials to clone a Cloud Source
+  
 #First Clone from Google Cloud Source Repository  
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone','https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
+#- name: 'gcr.io/cloud-builders/git'
+  #args: ['clone','https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
 
 #Build the image 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build','-t','us-central1-docker.pkg.dev/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}','.']
+  args: ['build','-t','gcr.io/${_PROJECT}/${_CONTAINERNAME}:$REVISION_ID','.']
 
 #Push the image  
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push','us-central1-docker.pkg.dev/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}']
+  args: ['push','gcr.io/${_PROJECT}/${_CONTAINERNAME}:$REVISION_ID']
   
 #Update the container image using kubectl set
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
   - 'set'
-  - 'image'
-  - 'deployment/${_DEPLOYMENTNAME}'
-  - '${_CONTAINERNAME}=us-central1-docker.pkg.dev/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}'
   - '--namespace'
   - 'mdev'
+  - 'image'
+  - 'deployment/${_DEPLOYMENTNAME}'
+  - '${_CONTAINERNAME}=gcr.io/${_PROJECT}/${_CONTAINERNAME}:$REVISION_ID'
+ 
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
   
 substitutions:
     #GCP Specific configuration. Please DON'T change anything
-    _PROJECT: My-kubernates-Project
+    #_PROJECT: My-kubernates-Project
+    _PROJECT: my-kubernates-project-338709
     _ZONE: us-central1-a
     _GKE_CLUSTER: demo-mdev-mqa
     
     #Repository Specific configuration. DevOps can change this settings
-    _DEPLOYMENTNAME: hello-world-service
-    _CONTAINERNAME: hello-world-service    
-    _REPO_NAME: docker-repo
+    _DEPLOYMENTNAME: adminapi
+    _CONTAINERNAME: adminapi    
+    #_REPO_NAME: docker-repo
     
     # Developers ONLY change
-    _VERSION: v1.0
-    
-options:
-    substitution_option: 'ALLOW_LOOSE'
+    #_VERSION: v1.0
+timeout: 10000s
