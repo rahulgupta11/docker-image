@@ -21,7 +21,7 @@ steps:
   args:
   - 'set'
   - '--namespace'
-  - 'mdev'
+  - 'mqa'
   - 'image'
   - 'deployment/adminapi'
   - 'adminapi=gcr.io/$PROJECT_ID/adminapi:$REVISION_ID'
