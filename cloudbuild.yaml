@@ -39,7 +39,7 @@ substitutions:
     
     #Repository Specific configuration. DevOps can change this settings
     _DEPLOYMENTNAME: hello-world-service
-    _CONTAINERNAME: hello-world-service    
+    _CONTAINERNAME: adminapi    
     #_REPO_NAME: docker-repo
     
     # Developers ONLY change
