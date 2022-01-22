@@ -32,8 +32,8 @@ steps:
   
 substitutions:
     #GCP Specific configuration. Please DON'T change anything
-    _PROJECT: My-kubernates-Project
-    #_PROJECT: my-kubernates-project-338709
+    #_PROJECT: My-kubernates-Project
+    _PROJECT: my-kubernates-project-338709
     _ZONE: us-central1-a
     _GKE_CLUSTER: demo-mdev-mqa
     
