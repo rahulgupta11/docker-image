@@ -38,7 +38,7 @@ substitutions:
     _GKE_CLUSTER: demo-mdev-mqa
     
     #Repository Specific configuration. DevOps can change this settings
-    _DEPLOYMENTNAME: hello-world-service
+    _DEPLOYMENTNAME: adminapi
     _CONTAINERNAME: adminapi    
     #_REPO_NAME: docker-repo
     
