@@ -47,3 +47,4 @@ steps:
     _KUBERNETES_NAMESPACE_NAME: mdev 
     _GCR_DOCKER_IMAGE_PATH: gcr.io/my-kubernates-project-338709/adminapi
 timeout: 900s
+
