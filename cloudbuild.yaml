@@ -37,8 +37,7 @@ steps:
   - 'CLOUDSDK_COMPUTE_ZONE=${_KUBERNETES_CLUSTER_LOCATION}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_KUBERNETES_CLUSTER_NAME}'
   
-  substitutions:
-    #GCP Specific configuration. Please DON'T change anything
+substitutions:
     _PROJECT_ID: my-kubernates-project-338709
     _KUBERNETES_CLUSTER_LOCATION: us-central1-a
     _KUBERNETES_CLUSTER_NAME: demo-mdev-mqa
@@ -47,8 +46,7 @@ steps:
     _KUBERNETES_NAMESPACE_NAME: mdev 
     _GCR_DOCKER_IMAGE_PATH: gcr.io/my-kubernates-project-338709/adminapi
     
-  options:
+options:
     substitution_option: 'ALLOW_LOOSE'
-
 timeout: 900s
 
