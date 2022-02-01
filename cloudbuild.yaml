@@ -46,5 +46,9 @@ steps:
     _KUBERNETES_CONTAINER_NAME: adminapi
     _KUBERNETES_NAMESPACE_NAME: mdev 
     _GCR_DOCKER_IMAGE_PATH: gcr.io/my-kubernates-project-338709/adminapi
+    
+  options:
+    substitution_option: 'ALLOW_LOOSE'
+
 timeout: 900s
 
