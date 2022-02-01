@@ -42,75 +42,8 @@ steps:
     _PROJECT_ID: my-kubernates-project-338709
     _KUBERNETES_CLUSTER_LOCATION: us-central1-a
     _KUBERNETES_CLUSTER_NAME: demo-mdev-mqa
-    _KUBERNETES_DEPLOYMENT_NAME: kards
-    _KUBERNETES_CONTAINER_NAME: kards
-    _KUBERNETES_NAMESPACE_NAME: mdev   
+    _KUBERNETES_DEPLOYMENT_NAME: adminapi
+    _KUBERNETES_CONTAINER_NAME: adminapi
+    _KUBERNETES_NAMESPACE_NAME: mdev 
+    _GCR_DOCKER_IMAGE_PATH: gcr.io/my-kubernates-project-338709/adminapi
 timeout: 900s
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-steps:
-
-#Build the image 
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build','-t','gcr.io/$PROJECT_ID/adminapi:$REVISION_ID','.']
-
-#Push the image  
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push','gcr.io/$PROJECT_ID/adminapi:$REVISION_ID']
-  
-#Update the container image using kubectl set
-- name: 'gcr.io/cloud-builders/kubectl'
-  args:
-  - 'set'
-  - '--namespace'
-  - 'mqa'
-  - 'image'
-  - 'deployment/adminapi'
-  - 'adminapi=gcr.io/$PROJECT_ID/adminapi:$REVISION_ID'
- 
-  env:
-  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=demo-mdev-mqa'
-  
-#substitutions:
-    #GCP Specific configuration. Please DON'T change anything
-    #_PROJECT: My-kubernates-Project
-    #_PROJECT: my-kubernates-project-338709
-    #_ZONE: us-central1-a
-    #_GKE_CLUSTER: demo-mdev-mqa
-    
-    #Repository Specific configuration. DevOps can change this settings
-    #_DEPLOYMENTNAME: adminapi
-    #_CONTAINERNAME: adminapi   
-    #_REPO_NAME: docker-repo
-    
-    # Developers ONLY change
-    #_VERSION: v1.0
-timeout: 10000s
