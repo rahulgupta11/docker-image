@@ -1,12 +1,81 @@
 steps:
-# credentials are required.
-#- name: 'gcr.io/cloud-builders/git'
- # args: ['clone', 'https://github.com/GoogleCloudPlatform/cloud-builders']
-# This step uses Application Default Credentials to clone a Cloud Source
+- name: 'gcr.io/cloud-builders/docker'
+  id: Build docker image
+  args: ['build', '--tag=${_GCR_DOCKER_IMAGE_PATH}:$SHORT_SHA', '--tag=${_GCR_DOCKER_IMAGE_PATH}:latest', '.']
+  dir: ${_SERVICE_FOLDER_NAME}
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push docker image with SHA tag
+  args: ['push', '${_GCR_DOCKER_IMAGE_PATH}:$SHORT_SHA']
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push docker image with latest tag
+  args: ['push', '${_GCR_DOCKER_IMAGE_PATH}:latest']
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Connecting to GKE cluster
+  args: ['container', 'clusters', 'get-credentials', '${_KUBERNETES_CLUSTER_NAME}', '--zone', '${_KUBERNETES_CLUSTER_LOCATION}', '--project', '${_PROJECT_ID}']
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Creating/Updating deployement, services
+  args: ['apply','-f','k8-manifests/services.yaml']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=${_KUBERNETES_CLUSTER_LOCATION}'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=${_KUBERNETES_CLUSTER_NAME}'
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Update image of kubernetes deployment
+  args: ['set','--namespace', '${_KUBERNETES_NAMESPACE_NAME}', 'image', 'deployment/${_KUBERNETES_DEPLOYMENT_NAME}', '${_KUBERNETES_CONTAINER_NAME}=${_GCR_DOCKER_IMAGE_PATH}:$SHORT_SHA']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=${_KUBERNETES_CLUSTER_LOCATION}'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=${_KUBERNETES_CLUSTER_NAME}'
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Check rollout status of kubernetes deployment
+  args: ['rollout','--namespace', '${_KUBERNETES_NAMESPACE_NAME}', 'status', 'deployment/${_KUBERNETES_DEPLOYMENT_NAME}']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=${_KUBERNETES_CLUSTER_LOCATION}'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=${_KUBERNETES_CLUSTER_NAME}'
   
-#First Clone from Google Cloud Source Repository  
-#- name: 'gcr.io/cloud-builders/git'
-  #args: ['clone','https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
+  substitutions:
+    #GCP Specific configuration. Please DON'T change anything
+    _PROJECT_ID: my-kubernates-project-338709
+    _KUBERNETES_CLUSTER_LOCATION: us-central1-a
+    _KUBERNETES_CLUSTER_NAME: demo-mdev-mqa
+    _KUBERNETES_DEPLOYMENT_NAME: kards
+    _KUBERNETES_CONTAINER_NAME: kards
+    _KUBERNETES_NAMESPACE_NAME: mdev   
+timeout: 900s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+steps:
 
 #Build the image 
 - name: 'gcr.io/cloud-builders/docker'
