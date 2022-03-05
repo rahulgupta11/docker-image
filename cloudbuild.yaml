@@ -43,7 +43,7 @@ substitutions:
     _KUBERNETES_CLUSTER_NAME: demo-mdev-mqa
     _KUBERNETES_DEPLOYMENT_NAME: adminapi
     _KUBERNETES_CONTAINER_NAME: adminapi
-    _KUBERNETES_NAMESPACE_NAME: mdev 
+    _KUBERNETES_NAMESPACE_NAME: mqa
     _GCR_DOCKER_IMAGE_PATH: gcr.io/my-kubernates-project-338709/adminapi
     
 options:
