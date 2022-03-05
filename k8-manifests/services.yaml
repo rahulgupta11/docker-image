@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adminapi
-  namespace: mdev
+  name: adminapi123
+  namespace: mqa
   labels:
     app: web
 spec:
@@ -39,7 +39,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: adminapi
-  namespace: mdev
+  namespace: mqa
 spec:
   type: LoadBalancer
   selector:
