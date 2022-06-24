@@ -7,10 +7,6 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Push docker image with SHA tag
   args: ['push', '${_GCR_DOCKER_IMAGE_PATH}:${_TAG_NAME}']
-  
-- name: 'gcr.io/cloud-builders/docker'
-  id: Push docker image with latest tag
-  args: ['push', '${_GCR_DOCKER_IMAGE_PATH}:latest']
 
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Connecting to GKE cluster
