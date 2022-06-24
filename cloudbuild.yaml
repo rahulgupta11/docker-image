@@ -3,11 +3,15 @@ steps:
   id: Build docker image
   args: ['build', '--tag=${_GCR_DOCKER_IMAGE_PATH}:$TAG_NAME', '--tag=${_GCR_DOCKER_IMAGE_PATH}:latest', '.']
   dir: ${_SERVICE_FOLDER_NAME}
+  env:
+  - 'TAG_NAME=${_TAG_NAME}'
 
 - name: 'gcr.io/cloud-builders/docker'
   id: Push docker image with SHA tag
   args: ['push', '${_GCR_DOCKER_IMAGE_PATH}:$TAG_NAME']
-
+  env:
+  - 'TAG_NAME=${_TAG_NAME}'
+  
 - name: 'gcr.io/cloud-builders/docker'
   id: Push docker image with latest tag
   args: ['push', '${_GCR_DOCKER_IMAGE_PATH}:latest']
