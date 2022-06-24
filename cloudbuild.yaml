@@ -1,12 +1,16 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Build docker image
-  args: ['build', '--tag=${_GCR_DOCKER_IMAGE_PATH}:${_TAG_NAME}','.']
+  args: ['build', '--tag=${_GCR_DOCKER_IMAGE_PATH}:$SHORT_SHA','--tag=${_GCR_DOCKER_IMAGE_PATH}:latest', '.']
   dir: ${_SERVICE_FOLDER_NAME}
 
 - name: 'gcr.io/cloud-builders/docker'
   id: Push docker image with SHA tag
-  args: ['push', '${_GCR_DOCKER_IMAGE_PATH}:${_TAG_NAME}']
+  args: ['push', '${_GCR_DOCKER_IMAGE_PATH}:$SHORT_SHA']
+
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push docker image with latest tag
+  args: ['push', '${_GCR_DOCKER_IMAGE_PATH}:latest']
 
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Connecting to GKE cluster
@@ -41,7 +45,6 @@ substitutions:
     _KUBERNETES_CONTAINER_NAME: adminapi
     _KUBERNETES_NAMESPACE_NAME: mdev
     _GCR_DOCKER_IMAGE_PATH: gcr.io/excellent-sunup-353211/adminapi
-    _TAG_NAME: v1.0
     
 options:
     substitution_option: 'ALLOW_LOOSE'
