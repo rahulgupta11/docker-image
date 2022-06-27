@@ -43,7 +43,7 @@ substitutions:
     _KUBERNETES_CLUSTER_NAME: elasticsearch
     _KUBERNETES_DEPLOYMENT_NAME: adminapi
     _KUBERNETES_CONTAINER_NAME: adminapi
-    _KUBERNETES_NAMESPACE_NAME: mqa
+    _KUBERNETES_NAMESPACE_NAME: rahul
     _GCR_DOCKER_IMAGE_PATH: gcr.io/excellent-sunup-353211/adminapi
     
 options:
