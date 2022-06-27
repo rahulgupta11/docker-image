@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: adminapi
-          image: 'nginx'
+          image: 'gcr.io/excellent-sunup-353211/adminapi:qa.3'
           ports:
             - containerPort: 80
           resources:
